@@ -12,12 +12,11 @@ import java.util.logging.Logger;
 /**
  * @ClassName SerializeUtil
  * @Description 序列化工具类
- * @author guowei.wang
  * @date 2015-8-3
  */
-public class SerializeUtil {
+public class TestSerialize {
 	
-	private static final Logger logger = Logger.getLogger(SerializeUtil.class.getName());
+	private static final Logger logger = Logger.getLogger(TestSerialize.class.getName());
 	
 	/**
 	 * 序列化
