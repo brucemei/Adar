@@ -1,4 +1,4 @@
-package free.test;
+package free.socket;
 
 import java.io.IOException;
 import java.io.InputStream;

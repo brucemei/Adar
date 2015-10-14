@@ -1,4 +1,4 @@
-package free.test;
+package free.socket;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
