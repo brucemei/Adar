@@ -24,7 +24,7 @@ public class RedisInfo{
 	 * @param auth
 	 */
 	public static void printRedisInfo(String host, int port, String auth) {
-		System.out.println(System.lineSeparator() + "***************** Dev当前Redis测试 *****************");
+		System.out.println(System.lineSeparator() + "***************** RedisInfo *****************");
 		
 		Jedis client = null;
 		try {

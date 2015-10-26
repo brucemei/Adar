@@ -14,7 +14,10 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 
 /**
- * 文件拷贝效率对比   io bufferio map
+ * 文件拷贝效率对比  
+ * 		Buffer IO
+ * 		NIO map 
+ * 		NIO channel
  */
 public class FileCopyPK {
 	
@@ -35,6 +38,13 @@ public class FileCopyPK {
 		System.out.println("Channel: " + (System.currentTimeMillis() - start));
 	}
 	
+	/**
+	 * Buffer IO
+	 * 
+	 * @param src
+	 * @param out
+	 * @throws Exception
+	 */
 	private static void copyBufferIo(String src, String out) throws Exception {
 		out = out + "BufferIo";
 		
@@ -52,6 +62,13 @@ public class FileCopyPK {
 		outFile.close();
 	}
 	
+	/**
+	 * NIO Map
+	 * 
+	 * @param src
+	 * @param out
+	 * @throws Exception
+	 */
 	private static void copyFileMap(String src, String out) throws Exception {
 		out = out + "FileMap";
 		
@@ -72,6 +89,13 @@ public class FileCopyPK {
 		outFile.close();
 	}
 	
+	/**
+	 * NIO channel
+	 * 
+	 * @param src
+	 * @param out
+	 * @throws Exception
+	 */
 	private static void copyChannel(String src, String out) throws Exception {
 		out = out + "Channel";
 		
