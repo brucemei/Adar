@@ -1,4 +1,4 @@
-package free.socket;
+package free.utils;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

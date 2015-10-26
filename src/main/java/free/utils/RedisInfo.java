@@ -1,4 +1,4 @@
-package free.redis;
+package free.utils;
 
 
 import java.util.List;
@@ -7,21 +7,28 @@ import java.util.Set;
 import redis.clients.jedis.DebugParams;
 import redis.clients.jedis.Jedis;
 
+/**
+ * 测试Redis使用情况
+ */
 public class RedisInfo{
 	
 	public static void main(String[] args) {
-		printRedisInfo(args[0], Integer.valueOf(args[1]), args[2]);
+		printRedisInfo("localhost", 6379, "test");
 	}
 	
 	/**
-	 * 测试当前DEV环境Redis使用情况
+	 * 测试Redis使用情况
+	 *
+	 * @param host
+	 * @param port
+	 * @param auth
 	 */
 	public static void printRedisInfo(String host, int port, String auth) {
 		System.out.println(System.lineSeparator() + "***************** Dev当前Redis测试 *****************");
 		
 		Jedis client = null;
 		try {
-			client = new Jedis(host, port, 100000000);
+			client = new Jedis(host, port, 10000);
 			client.auth(auth);
 
 			printRedisInfo(client);

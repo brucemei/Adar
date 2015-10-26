@@ -1,11 +1,12 @@
 
-package free.test;
+package free.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 
@@ -14,9 +15,9 @@ import java.util.logging.Logger;
  * @Description 序列化工具类
  * @date 2015-8-3
  */
-public class TestSerialize {
+public class SerializeUtils {
 	
-	private static final Logger logger = Logger.getLogger(TestSerialize.class.getName());
+	private static final Logger logger = Logger.getLogger(SerializeUtils.class.getName());
 	
 	/**
 	 * 序列化
@@ -27,6 +28,8 @@ public class TestSerialize {
 	 * @Date 2015-8-3
 	 */
     public static byte[] serialize(Object object) {
+    	Objects.requireNonNull(object);
+    	
     	byte[] bytes = null;
     	
         try {
@@ -54,6 +57,9 @@ public class TestSerialize {
      * @Date 2015-8-3
      */
     public static <T> T unserialize(byte[] bytes, Class<T> type) {
+    	Objects.requireNonNull(bytes);
+    	Objects.requireNonNull(type);
+    	
     	T instance = null;
         try {
         	ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
