@@ -3,7 +3,6 @@ package free.thread;
 
 public class TestInterrupt {
 
-	
 	public static void main(String[] args) {
 		Thread testIn = new Thread("test interrupt") {
 
