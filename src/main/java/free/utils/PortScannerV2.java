@@ -19,7 +19,8 @@ public class PortScannerV2 {
 	 */
 	private static int TIME_OUT_CONNECT = 200;
 	
-	private static ExecutorService executor = Executors.newCachedThreadPool();
+	private static ExecutorService executor = 
+								Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4);
 	
 	public static void main(String[] args) {
 		scan("localhost", 8070, 10000);
