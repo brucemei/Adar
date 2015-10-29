@@ -60,7 +60,8 @@ public class PortScannerV2 {
 				socket.connect(new InetSocketAddress(host, port), TIME_OUT_CONNECT);
 				System.err.println("Port is listen: " + port);
 			} catch (UnknownHostException e) {
-				System.out.println("Host wrong.");
+				System.out.println("Host wrong: " + host);
+				System.exit(1);
 			} catch (IOException e) {
 				// do nothing
 			} finally {

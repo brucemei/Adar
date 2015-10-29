@@ -37,7 +37,8 @@ public class PortScanner {
 				
 				System.err.println("Port is listen: " + port);
 			} catch (UnknownHostException e) {
-				System.out.println("Host wrong.");
+				System.out.println("Host wrong: " + host);
+				break;
 			} catch (IOException e) {
 				continue;
 			} finally {
