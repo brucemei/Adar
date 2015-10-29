@@ -31,7 +31,6 @@ public class SerializeUtils {
     	Objects.requireNonNull(object);
     	
     	byte[] bytes = null;
-    	
         try {
         	ByteArrayOutputStream baos = new ByteArrayOutputStream();
         	ObjectOutputStream oos = new ObjectOutputStream(baos);
