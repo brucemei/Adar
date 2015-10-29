@@ -13,19 +13,20 @@ import java.util.concurrent.Executors;
  * 采用多线程并发扫描
  */
 public class PortScannerV2 {
-	
+
 	/**
 	 * 连接超时 ms
 	 */
-	private static int TIME_OUT_CONNECT = 200;
-	
-	private static ExecutorService executor = 
-								Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4);
-	
+	private static final int TIME_OUT_CONNECT = 200;
+
+	private static final int PROCESSORS = Runtime.getRuntime().availableProcessors() * 4;
+
+	private static final ExecutorService executor = Executors.newFixedThreadPool(PROCESSORS);
+
 	public static void main(String[] args) {
 		scan("localhost", 8070, 10000);
 	}
-	
+
 	/**
 	 * Port scan
 	 */
@@ -33,20 +34,20 @@ public class PortScannerV2 {
 		if (start < 0 || start > end) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		for (int port = start; port < end; port++) {
 			executor.execute(new Scanner(host, port));
 		}
-		
+
 		executor.shutdown();
 	}
-	
+
 	static class Scanner implements Runnable {
-		
+
 		private String host;
-		
+
 		private int port;
-		
+
 		public Scanner(String host, int port) {
 			super();
 			this.host = host;
@@ -57,7 +58,7 @@ public class PortScannerV2 {
 			Socket socket = new Socket();
 			try {
 				System.out.println("Scan port...   Port: " + port);
-				
+
 				socket.connect(new InetSocketAddress(host, port), TIME_OUT_CONNECT);
 				System.err.println("Port is listen: " + port);
 			} catch (UnknownHostException e) {
@@ -69,7 +70,8 @@ public class PortScannerV2 {
 				if (socket != null) {
 					try {
 						socket.close();
-					} catch (IOException e) {}
+					} catch (IOException e) {
+					}
 				}
 			}
 		}
