@@ -132,11 +132,11 @@ public class EchoService {
 			
 			buffer.clear();
 			
-			key.interestOps(SelectionKey.OP_READ);
 		} catch (IOException e) {
-			e.printStackTrace();
-			
+			// do nothing
+		} finally {
 			key.cancel();
+
 			try {
 				socketChannel.close();
 			} catch (IOException e1) {
