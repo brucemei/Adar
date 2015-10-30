@@ -91,7 +91,7 @@ public class EchoService {
 		try {
 			ByteBuffer buffer = (ByteBuffer) key.attachment();
 			int read = socketChannel.read(buffer);
-			System.out.println("Read: " + read);
+			System.out.println("Packet length: " + read);
 			if (read == -1) {
 				key.cancel();
 				socketChannel.close();
@@ -126,12 +126,11 @@ public class EchoService {
 		try {
 			ByteBuffer buffer = (ByteBuffer) key.attachment();
 			buffer.flip();
-			System.out.println("Msg: " + new String(buffer.array()));
+			System.out.println(new String(buffer.array()));
 			
 			socketChannel.write(buffer);
 			
 			buffer.clear();
-			
 		} catch (IOException e) {
 			// do nothing
 		} finally {
