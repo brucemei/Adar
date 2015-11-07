@@ -11,12 +11,12 @@ import java.net.Socket;
 /**
  * 错误HTTP响应码400
  */
+@SuppressWarnings("all")
 public class TestSocketServerClient {
 	public static void main(String[] args) throws IOException {
-		testServer();
+		testClient();
 	}
 	
-	@SuppressWarnings("resource")
 	private static void testServer() throws IOException {
 		ServerSocket serverSocket = new ServerSocket(10080);
 		
@@ -38,10 +38,9 @@ public class TestSocketServerClient {
 		}
 	}
 	
-	@SuppressWarnings("unused")
 	private static void testClient() throws IOException {
 		Socket socket = new Socket();
-		socket.connect(new InetSocketAddress("172.16.34.199", 7080));
+		socket.connect(new InetSocketAddress("localhost", 10080));
 		
 		OutputStream outputStream = socket.getOutputStream();
 		InputStream inputStream = socket.getInputStream();
