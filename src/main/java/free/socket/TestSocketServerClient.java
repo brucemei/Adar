@@ -46,7 +46,7 @@ public class TestSocketServerClient {
 		InputStream inputStream = socket.getInputStream();
 		
 		PrintStream printStream = new PrintStream(outputStream, true);
-		printStream.println("ahsadsadsadsds");
+		printStream.println("test");
 		
 		byte[] buf = new byte[1024];
 		int read = inputStream.read(buf);
