@@ -78,9 +78,9 @@ public class EchoService {
 			SocketChannel socketChannel = serverSocketChannel.accept();
 			socketChannel.configureBlocking(false);
 			
-			System.out.println("Visitor: " + socketChannel.getRemoteAddress());
+			System.out.println("[INFO] Visitor: " + socketChannel.getRemoteAddress());
 			
-			socketChannel.register(SELECTOR, SelectionKey.OP_READ, ByteBuffer.allocate(1024));
+			socketChannel.register(SELECTOR, SelectionKey.OP_READ);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -89,25 +89,28 @@ public class EchoService {
 	private static void doRead(SelectionKey key) {
 		SocketChannel socketChannel = (SocketChannel) key.channel();
 		try {
-			ByteBuffer buffer = (ByteBuffer) key.attachment();
+			ByteBuffer buffer = ByteBuffer.allocate(1024);
 			int read = socketChannel.read(buffer);
-			System.out.println("Packet length: " + read);
 			if (read == -1) {
 				key.cancel();
 				socketChannel.close();
 				
 				System.out.println("Socket Close");
 			} else {
-				if (!buffer.hasRemaining()) {
+				while (!buffer.hasRemaining()) {
 					ByteBuffer newBuffer = ByteBuffer.allocate(buffer.limit() * 2);
 					
 					buffer.flip();
 					newBuffer.put(buffer);
 					
-					key.attach(newBuffer);
-				} else {
-					key.interestOps(SelectionKey.OP_WRITE);
+					buffer = newBuffer;
+					
+					socketChannel.read(buffer);
 				}
+				System.out.println("[INFO] **************" + "Packet length: " + buffer.position() + "**************");
+
+				key.attach(buffer);
+				key.interestOps(SelectionKey.OP_WRITE);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -126,16 +129,14 @@ public class EchoService {
 		try {
 			ByteBuffer buffer = (ByteBuffer) key.attachment();
 			buffer.flip();
+
 			System.out.println(new String(buffer.array()));
 			
 			socketChannel.write(buffer);
-			
-			buffer.clear();
 		} catch (IOException e) {
-			// do nothing
+			e.printStackTrace();
 		} finally {
 			key.cancel();
-
 			try {
 				socketChannel.close();
 			} catch (IOException e1) {
