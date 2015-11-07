@@ -24,6 +24,6 @@ public class TestSchedule {
 			}
 		}, 1L, 0L, TimeUnit.SECONDS);
 
-		System.out.println("main asdasd");
+		System.out.println("main thread");
 	}
 }
