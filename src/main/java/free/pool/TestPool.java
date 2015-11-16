@@ -3,9 +3,9 @@ package free.pool;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PooledObject;
+import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 
@@ -25,18 +25,35 @@ public class TestPool {
 	}
 }
 
-class FactoryDemo extends BasePooledObjectFactory<Demo> {
+class FactoryDemo implements PooledObjectFactory<Demo> {
 	
 	private static AtomicInteger idGen = new AtomicInteger(0);
 
 	@Override
-	public Demo create() throws Exception {
-		return new Demo(idGen.addAndGet(1), "demo");
+	public PooledObject<Demo> makeObject() throws Exception {
+		return new DefaultPooledObject<Demo>(new Demo(idGen.addAndGet(1), "demo"));
 	}
 
 	@Override
-	public PooledObject<Demo> wrap(Demo obj) {
-		return new DefaultPooledObject<Demo>(obj);
+	public void destroyObject(PooledObject<Demo> p) throws Exception {
+		System.out.println("XH obj");
+	}
+
+	@Override
+	public boolean validateObject(PooledObject<Demo> p) {
+		System.out.println("YZ obj");
+		return true;
+	}
+
+	@Override
+	public void activateObject(PooledObject<Demo> p) throws Exception {
+		System.out.println("JH obj");
+		
+	}
+
+	@Override
+	public void passivateObject(PooledObject<Demo> p) throws Exception {
+		System.out.println("DH obj");
 	}
 }
 
