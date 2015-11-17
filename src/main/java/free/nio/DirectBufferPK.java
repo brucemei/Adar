@@ -5,6 +5,11 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
+/**
+ * 直接缓冲区与非直接缓冲区PK
+ * 
+ * JVM: -Xms512m -Xmx2048m -XX:MaxDirectMemorySize=2048m
+ */
 public class DirectBufferPK {
 	
 	private static final String src = "E:/File_install/jprofiler_windows-x64_8_0_7.exe";
