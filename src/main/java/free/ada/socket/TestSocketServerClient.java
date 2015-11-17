@@ -1,4 +1,4 @@
-package free.socket;
+package free.ada.socket;
 
 import java.io.IOException;
 import java.io.InputStream;

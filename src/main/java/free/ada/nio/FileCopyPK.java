@@ -1,5 +1,5 @@
 
-package free.nio;
+package free.ada.nio;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

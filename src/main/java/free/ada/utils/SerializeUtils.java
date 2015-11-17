@@ -1,5 +1,5 @@
 
-package free.utils;
+package free.ada.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

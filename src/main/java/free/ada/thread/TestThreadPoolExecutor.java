@@ -1,5 +1,5 @@
 
-package free.thread;
+package free.ada.thread;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

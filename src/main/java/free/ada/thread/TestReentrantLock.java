@@ -1,5 +1,5 @@
 
-package free.thread;
+package free.ada.thread;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

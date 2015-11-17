@@ -1,5 +1,5 @@
 
-package free.thread;
+package free.ada.thread;
 
 public class TestWaitNotify {
 
