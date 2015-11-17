@@ -16,15 +16,15 @@ public class DirectBufferPK {
 		ByteBuffer directBuffer = ByteBuffer.allocateDirect(size);
 		
 		long start = System.currentTimeMillis();
-		read(src, buffer);
+		readToBuffer(src, buffer);
 		System.out.println("Buffer: " + (System.currentTimeMillis() - start));
 
 		start = System.currentTimeMillis();
-		read(src, directBuffer);
+		readToBuffer(src, directBuffer);
 		System.out.println("DirectBuffer: " + (System.currentTimeMillis() - start));
 	}
 	
-	private static void read(String src, ByteBuffer buffer) throws IOException {
+	private static void readToBuffer(String src, ByteBuffer buffer) throws IOException {
 		RandomAccessFile srcFile = new RandomAccessFile(src, "r");
 		FileChannel srcChannel = srcFile.getChannel();
 		
