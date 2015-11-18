@@ -1,4 +1,4 @@
-package free.ada.nio;
+package free.adar.nio;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

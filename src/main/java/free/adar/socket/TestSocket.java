@@ -1,4 +1,4 @@
-package free.ada.socket;
+package free.adar.socket;
 
 import java.io.IOException;
 import java.net.InetAddress;

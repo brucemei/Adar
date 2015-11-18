@@ -1,5 +1,5 @@
 
-package free.ada.thread;
+package free.adar.thread;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

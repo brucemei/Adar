@@ -1,4 +1,4 @@
-package free.ada.socket;
+package free.adar.socket;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
