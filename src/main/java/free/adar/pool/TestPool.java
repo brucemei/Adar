@@ -31,6 +31,7 @@ class FactoryDemo implements PooledObjectFactory<Demo> {
 
 	@Override
 	public PooledObject<Demo> makeObject() throws Exception {
+		System.out.println("MK obj");
 		return new DefaultPooledObject<Demo>(new Demo(idGen.addAndGet(1), "demo"));
 	}
 
