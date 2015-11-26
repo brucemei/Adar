@@ -35,10 +35,12 @@ public class HelloAFC {
 	private static void processCompletionHandler(AsynchronousFileChannel afc, ByteBuffer buffer) throws Exception {
 		buffer.clear();
 		
+		System.out.println("1: " + Thread.currentThread() + " " + System.currentTimeMillis());
 		afc.read(buffer, 0, null, new CompletionHandler<Integer, Object>() {
 
 			@Override
 			public void completed(Integer result, Object attachment) {
+				System.out.println("2: " + Thread.currentThread() + " " + System.currentTimeMillis());
 				System.out.println("Completed: " + result);
 			}
 
@@ -47,5 +49,8 @@ public class HelloAFC {
 				System.out.println("Failed");
 			}
 		});
+		System.out.println("3: " + Thread.currentThread() + " " + System.currentTimeMillis());
+		
+		Thread.sleep(2000);
 	}
 }
