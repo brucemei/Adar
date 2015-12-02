@@ -7,7 +7,10 @@ import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class TestThreadPoolExecutor {
+/**
+ * 测试修改线程池线程数
+ */
+public class TestModifyThreadPool {
 	public static void main(String[] args) {
 		BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<Runnable>();
 
