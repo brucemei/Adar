@@ -1,5 +1,5 @@
 
-package free.adar.thread;
+package free.adar.concurrent;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

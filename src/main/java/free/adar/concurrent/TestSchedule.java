@@ -1,5 +1,5 @@
 
-package free.adar.thread;
+package free.adar.concurrent;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

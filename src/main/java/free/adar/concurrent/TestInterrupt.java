@@ -1,4 +1,4 @@
-package free.adar.thread;
+package free.adar.concurrent;
 
 
 public class TestInterrupt {
