@@ -5,8 +5,8 @@ package free.adar.concurrent;
  */
 public class TestSynchronized {
 
-//	private int a = 0;
-	private volatile int a = 0;
+	private int a = 0;
+//	private volatile int a = 0;
 	
 	private void m1() throws InterruptedException {
 		synchronized (TestSynchronized.class) {
