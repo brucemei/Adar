@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * 直接缓冲区与非直接缓冲区PK
+ * 直接缓冲区与非直接缓冲区读取效率PK
  * 		效率对比不包含缓冲区创建时间(直接缓冲区创建开销较大)
  * 
  * JVM: -Xms512m -Xmx2048m -XX:MaxDirectMemorySize=2048m
