@@ -29,7 +29,9 @@ public class RedisInfo{
 		Jedis client = null;
 		try {
 			client = new Jedis(host, port, 10000);
-			client.auth(auth);
+			if (auth != null) {
+				client.auth(auth);
+			}
 
 			printRedisInfo(client);
 		} finally {
