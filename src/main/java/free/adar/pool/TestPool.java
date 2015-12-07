@@ -60,7 +60,7 @@ class BookPoolFactory implements PooledObjectFactory<Book> {
 	 * 		1. passivateObject
 	 * 		2. return
 	 * 
-	 * 		ex: if no core poolobj, will destroy when expire.
+	 * 		ex: if not core poolobj, will destroy when expire.
 	 */
 	
 	/*
