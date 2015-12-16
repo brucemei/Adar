@@ -3,7 +3,6 @@ package free.adar.nio;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
@@ -14,11 +13,15 @@ public class BufferDecode {
 	private static final String PATH = "E:/1.txt";
 	
 	public static void main(String[] args) throws IOException {
-		Charset charset = Charset.forName(UTF8);
-		
-		CharBuffer charBuffer = charset.newDecoder().decode(readBuffer(PATH, false));
-		
-		System.out.println(charBuffer.toString());
+		System.out.println(decode(ByteBuffer.wrap("hahaha哈哈".getBytes())));
+
+		System.out.println(decode(readBuffer(PATH, false)));
+
+		System.out.println(decode(readBuffer(PATH, true)));
+	}
+	
+	private static String decode(ByteBuffer byteBuffer) throws IOException {
+		return Charset.forName(UTF8).newDecoder().decode(readBuffer(PATH, false)).toString();
 	}
 
 	private static ByteBuffer readBuffer(String path, boolean isDirect) throws IOException {
