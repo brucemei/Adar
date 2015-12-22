@@ -10,6 +10,7 @@
 		<netty.version>3.5.9.Final</netty.version>
 		<commons-pool2.version>2.2</commons-pool2.version>
 		<httpasyncclient.version>4.1</httpasyncclient.version>
+		<fastjson.version>1.2.6</fastjson.version>
 	</properties>
 
 	<dependencies>
@@ -35,6 +36,12 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpasyncclient</artifactId>
 			<version>${httpasyncclient.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
 		</dependency>
 	</dependencies>
 </project>
