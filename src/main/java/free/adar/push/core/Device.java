@@ -1,6 +1,5 @@
 package free.adar.push.core;
 
-
 public enum Device {
 
 	ANDROID(3), 
