@@ -1,26 +1,14 @@
 package free.adar.push;
 
-import com.baidu.yun.push.client.BaiduPushClient;
-import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest;
-import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
-
-import free.adar.push.core.Device;
+import free.adar.push.common.Device;
 import free.adar.push.core.Push;
+import free.adar.push.core.PushMsg;
 
 public class BootStrap {
 	 
-	private static final String CHANNELID = "";
+	private static final String CHANNELID = "4053776551826423861";
 
 	public static void main(String[] args) throws Exception {
-		BaiduPushClient pushClient = Push.buildPushClient();
-		
-		PushMsgToSingleDeviceRequest singleDeviceRequest = Push.buildSingleDeviceRequest(CHANNELID, Device.ANDROID);
-		
-		System.out.println("Push Time(B): " + System.currentTimeMillis());
-		PushMsgToSingleDeviceResponse response = pushClient.pushMsgToSingleDevice(singleDeviceRequest);
-		System.out.println("Push Time(A): " + System.currentTimeMillis());
-		
-		System.out.println("Msg id: " + response.getMsgId());
-		System.out.println("SendTime: " + response.getSendTime());
+		Push.pushMsgToSingleDevice(PushMsg.buildSingleDeviceRequest(CHANNELID, Device.ANDROID));
 	}
 }

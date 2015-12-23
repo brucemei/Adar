@@ -5,49 +5,53 @@ import com.baidu.yun.core.log.YunLogHandler;
 import com.baidu.yun.push.auth.PushKeyPair;
 import com.baidu.yun.push.client.BaiduPushClient;
 import com.baidu.yun.push.constants.BaiduPushConstants;
+import com.baidu.yun.push.exception.PushClientException;
+import com.baidu.yun.push.exception.PushServerException;
 import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest;
+import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
+import com.baidu.yun.push.model.QueryMsgStatusRequest;
+import com.baidu.yun.push.model.QueryMsgStatusResponse;
 
-import free.adar.push.message.MessageBuilder;
+import free.adar.push.common.Constants;
 
-/**
- * 基于Baidu Push
- */
 public class Push {
-	
-	private static final String API_KEY = "G9i3USqlkGcV8xN43kZ5GWns";
-	
-	private static final String SECRET_KEY = "aQElj489UiY7UipYbjLZVIxBtNabQ10H";
 	
 	private static final PushKeyPair KEYPAIR;
 	static {
-		KEYPAIR = new PushKeyPair(API_KEY, SECRET_KEY);
+		KEYPAIR = new PushKeyPair(Constants.API_KEY, Constants.SECRET_KEY);
 	}
 
-	private static final int MESSSAGE_TYPE = 1;
-	
-	private static final int MSG_EXPIRES = 3600;
-	
 	public static BaiduPushClient buildPushClient() {
+		return buildPushClient(false);
+	}
+	
+	public static BaiduPushClient buildPushClient(boolean openLog) {
 		BaiduPushClient pushClient = new BaiduPushClient(KEYPAIR, BaiduPushConstants.CHANNEL_REST_URL);
-		pushClient.setChannelLogHandler(logHandler());
+		if (openLog) {
+			pushClient.setChannelLogHandler(logHandler());
+		}
 		
 		return pushClient;
 	}
 	
-	public static PushMsgToSingleDeviceRequest buildSingleDeviceRequest(String channelId, Device device) {
-		return buildSingleDeviceRequest(channelId, device, MessageBuilder.buildAndroidMessage());
+	public static PushMsgToSingleDeviceResponse pushMsgToSingleDevice(PushMsgToSingleDeviceRequest singleDeviceRequest) throws PushClientException, PushServerException {
+		return pushMsgToSingleDevice(singleDeviceRequest, false);
+	}
+
+	public static PushMsgToSingleDeviceResponse pushMsgToSingleDevice(PushMsgToSingleDeviceRequest singleDeviceRequest, boolean openLog) throws PushClientException, PushServerException {
+		return pushMsgToSingleDevice(buildPushClient(openLog), singleDeviceRequest);
+	}
+
+	public static PushMsgToSingleDeviceResponse pushMsgToSingleDevice(BaiduPushClient pushClient, PushMsgToSingleDeviceRequest singleDeviceRequest) throws PushClientException, PushServerException {
+		return pushClient.pushMsgToSingleDevice(singleDeviceRequest);
 	}
 	
-	public static PushMsgToSingleDeviceRequest buildSingleDeviceRequest(String channelId, Device device, String message) {
-		PushMsgToSingleDeviceRequest singleDeviceRequest = new PushMsgToSingleDeviceRequest();
-		singleDeviceRequest.addChannelId(channelId);
-		singleDeviceRequest.addDeviceType(device.code());
-		singleDeviceRequest.addMessage(message);
-
-		singleDeviceRequest.addMsgExpires(MSG_EXPIRES);
-		singleDeviceRequest.addMessageType(MESSSAGE_TYPE);
-		
-		return singleDeviceRequest;
+	public static QueryMsgStatusResponse queryMsgStatus(QueryMsgStatusRequest msgStatusRequest) throws PushClientException, PushServerException {
+		return queryMsgStatus(buildPushClient(), msgStatusRequest);
+	}
+	
+	public static QueryMsgStatusResponse queryMsgStatus(BaiduPushClient pushClient, QueryMsgStatusRequest msgStatusRequest) throws PushClientException, PushServerException {
+		return pushClient.queryMsgStatus(msgStatusRequest);
 	}
 	
 	private static YunLogHandler logHandler() {
@@ -55,8 +59,8 @@ public class Push {
 			
 			@Override
 			public void onHandle(YunLogEvent event) {
-				System.out.println("Level: " + event.getLevel());
-				System.out.println("Message: " + event.getMessage());
+				System.err.println(event.getLevel());
+				System.err.println(event.getMessage());
 			}
 		};
 	}

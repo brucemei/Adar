@@ -1,4 +1,4 @@
-package free.adar.push.core;
+package free.adar.push.common;
 
 public enum Device {
 
