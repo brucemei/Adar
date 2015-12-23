@@ -19,7 +19,7 @@ public class PortScannerV2 {
 	 */
 	private static final int TIME_OUT_CONNECT = 200;
 
-	private static final int PROCESSORS = Runtime.getRuntime().availableProcessors() * 4;
+	private static final int PROCESSORS = Runtime.getRuntime().availableProcessors() * 20;
 
 	private static final ExecutorService executor = Executors.newFixedThreadPool(PROCESSORS);
 
