@@ -11,6 +11,7 @@
 		<commons-pool2.version>2.2</commons-pool2.version>
 		<httpasyncclient.version>4.1</httpasyncclient.version>
 		<fastjson.version>1.2.6</fastjson.version>
+		<qiniu.version>7.0.4</qiniu.version>
 	</properties>
 
 	<dependencies>
@@ -43,5 +44,11 @@
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.qiniu</groupId>
+			<artifactId>qiniu-java-sdk</artifactId>
+			<version>${qiniu.version}</version>
+		</dependency> 
 	</dependencies>
 </project>
