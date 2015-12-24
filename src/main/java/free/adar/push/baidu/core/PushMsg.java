@@ -1,9 +1,9 @@
-package free.adar.push.core;
+package free.adar.push.baidu.core;
 
 import com.baidu.yun.push.model.PushMsgToSingleDeviceRequest;
 
-import free.adar.push.common.Device;
-import free.adar.push.message.MessageBuilder;
+import free.adar.push.baidu.common.Device;
+import free.adar.push.baidu.message.MessageBuilder;
 
 public class PushMsg {
 	

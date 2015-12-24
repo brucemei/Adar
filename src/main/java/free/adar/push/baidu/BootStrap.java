@@ -1,8 +1,8 @@
-package free.adar.push;
+package free.adar.push.baidu;
 
-import free.adar.push.common.Device;
-import free.adar.push.core.Push;
-import free.adar.push.core.PushMsg;
+import free.adar.push.baidu.common.Device;
+import free.adar.push.baidu.core.Push;
+import free.adar.push.baidu.core.PushMsg;
 
 public class BootStrap {
 	 

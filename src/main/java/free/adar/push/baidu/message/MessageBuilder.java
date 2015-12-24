@@ -1,4 +1,4 @@
-package free.adar.push.message;
+package free.adar.push.baidu.message;
 
 import com.alibaba.fastjson.JSONObject;
 

@@ -1,4 +1,4 @@
-package free.adar.push.core;
+package free.adar.push.baidu.core;
 
 import com.baidu.yun.core.log.YunLogEvent;
 import com.baidu.yun.core.log.YunLogHandler;
@@ -12,7 +12,7 @@ import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
 import com.baidu.yun.push.model.QueryMsgStatusRequest;
 import com.baidu.yun.push.model.QueryMsgStatusResponse;
 
-import free.adar.push.common.Constants;
+import free.adar.push.baidu.common.Constants;
 
 public class Push {
 	

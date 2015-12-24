@@ -1,4 +1,4 @@
-package free.adar.push.common;
+package free.adar.push.baidu.common;
 
 public class Constants {
 
