@@ -1,4 +1,4 @@
-package free.adar.pool;
+package free.adar.pool.commonpool;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +14,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 /**
  * Common-pool2
  */
-public class TestPool {
+public class CommonPool {
 
 	public static void main(String[] args) throws NoSuchElementException, IllegalStateException, Exception {
 		GenericObjectPool<Book> objectPool = new GenericObjectPool<Book>(new BookPoolFactory(), buildPoolConfig(5, 10, 2));
