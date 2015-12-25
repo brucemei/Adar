@@ -2,7 +2,7 @@ package free.adar.push.baidu.core;
 
 import com.baidu.yun.push.model.QueryMsgStatusRequest;
 
-import free.adar.push.baidu.common.Device;
+import free.adar.push.common.Device;
 
 public class PushStatus {
 	

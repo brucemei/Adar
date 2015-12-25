@@ -12,9 +12,9 @@ import com.baidu.yun.push.model.PushMsgToSingleDeviceResponse;
 import com.baidu.yun.push.model.QueryMsgStatusRequest;
 import com.baidu.yun.push.model.QueryMsgStatusResponse;
 
-import free.adar.push.baidu.common.Constants;
+import free.adar.push.common.Constants;
 
-public class Push {
+public class BaiduPush {
 	
 	private static final PushKeyPair KEYPAIR;
 	static {
