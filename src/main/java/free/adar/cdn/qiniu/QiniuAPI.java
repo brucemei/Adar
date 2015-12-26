@@ -17,6 +17,7 @@ private static final String AK = "5VgIFLBaRiovVudoXwWCBEUBfEzmvKKo_kdbcz7q";
 	
 	private static final String SEPARATOR_SLASH = "/";
 	
+	// Unit (s)
 	private static final long EXPIRED = 1 * 60;
 	
 	/**
