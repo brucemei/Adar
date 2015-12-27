@@ -1,5 +1,7 @@
 package free.adar.cdn.qiniu;
 
+import java.io.File;
+
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
@@ -14,8 +16,6 @@ private static final String AK = "5VgIFLBaRiovVudoXwWCBEUBfEzmvKKo_kdbcz7q";
 	private static final String BUCKET = "adar";
 	
 	private static final String BUCKET_DOMAIN = "http://7xpgc9.com1.z0.glb.clouddn.com";
-	
-	private static final String SEPARATOR_SLASH = "/";
 	
 	// Unit (s)
 	private static final long EXPIRED = 1 * 60;
@@ -49,7 +49,7 @@ private static final String AK = "5VgIFLBaRiovVudoXwWCBEUBfEzmvKKo_kdbcz7q";
 	private static String buildDownloadUrl(String fileName) {
 		StringBuilder buf = new StringBuilder();
 		buf.append(BUCKET_DOMAIN);
-		buf.append(SEPARATOR_SLASH);
+		buf.append(File.separator);
 		buf.append(fileName);
 		
 		return buf.toString();
