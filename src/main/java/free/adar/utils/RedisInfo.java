@@ -43,8 +43,7 @@ public class RedisInfo{
 	 * 打印Redis使用信息: 
 	 */
 	private static void printRedisInfo(Jedis client) {
-		System.out.println("***************** RedisInfo *****************");
-		
+		System.out.println("*********************** RedisInfo ***********************\r\n");
 		System.out.println("database" + "\t\t" + "type" + "\t\t" + "size" + "\t\t\t\t" + "key");
 		
 		Integer totalKey = 0;
