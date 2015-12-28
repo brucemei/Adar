@@ -9,7 +9,7 @@ import com.qiniu.util.Auth;
 
 public class QiniuAPI {
 
-private static final String AK = "5VgIFLBaRiovVudoXwWCBEUBfEzmvKKo_kdbcz7q";
+	private static final String AK = "5VgIFLBaRiovVudoXwWCBEUBfEzmvKKo_kdbcz7q";
 	
 	private static final String SK = "fK0nsUdg5oTOeTMqPtLdGw7RrrL3BorTDxA6rcFC";
 	
