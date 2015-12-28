@@ -20,21 +20,19 @@ public class TestBacklog {
 		new ServerSocket(PORT, BACKLOG);
 		
 		boolean fullOver = false;
-		for (int i = 0; i < BACKLOG + 1; i++) {
+		for (int i = 1; i <= BACKLOG; i++) {
 			try {
 				System.out.println("Check socket count: " + i);
 				
 				Socket socket = new Socket();
 				socket.connect(new InetSocketAddress("localhost", PORT));
 			} catch (ConnectException e) {
-				if (BACKLOG > i) {
-					System.out.println("Current environment upper limit: " + i);
-				}
+				System.out.println("Current environment upper limit: " + i);
 				
 				break;
 			}
 			
-			if (i == BACKLOG + 1) {
+			if (i == BACKLOG) {
 				fullOver = true;
 			}
 		}
