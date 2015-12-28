@@ -54,8 +54,6 @@ public class TestHttp {
 
 				System.out.println("Contant:" + CRLF + bro.toString() + CRLF);
 
-				System.out.println("******************Over*******************" + CRLF);
-
 				socket.close();
 			} catch (IOException e) {
 				continue;
