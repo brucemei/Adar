@@ -13,7 +13,7 @@ import redis.clients.jedis.Jedis;
 public class RedisInfo{
 	
 	public static void main(String[] args) {
-		printRedisInfo("localhost", 6379, "test");
+		printRedisInfo("localhost", 6379, null);
 	}
 	
 	/**
@@ -24,8 +24,6 @@ public class RedisInfo{
 	 * @param auth
 	 */
 	public static void printRedisInfo(String host, int port, String auth) {
-		System.out.println(System.lineSeparator() + "***************** RedisInfo *****************");
-		
 		Jedis client = null;
 		try {
 			client = new Jedis(host, port, 10000);
@@ -45,6 +43,8 @@ public class RedisInfo{
 	 * 打印Redis使用信息: 
 	 */
 	private static void printRedisInfo(Jedis client) {
+		System.out.println("***************** RedisInfo *****************");
+		
 		System.out.println("database" + "\t\t" + "type" + "\t\t" + "size" + "\t\t\t\t" + "key");
 		
 		Integer totalKey = 0;
