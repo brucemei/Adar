@@ -25,9 +25,9 @@ public class TestSocketServerClient {
 	
 	private static final String response = "HTTP/1.1 200 OK\r\n" +
 			 							   "Connection: keep-alive\r\n" + 
-			 							   "Content-Length: 0\r\n" + 
+			 							   "Content-Length: 2\r\n" + 
 			 							   "\r\n" + 
-			 							   "";
+			 							   "ok";
 	
 	public static void main(String[] args) throws IOException {
 		testClient();
