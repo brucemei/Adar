@@ -5,6 +5,13 @@
 	<artifactId>Adar</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
+	<developers>
+		<developer>
+			<name>Adar.w</name>
+			<email>Adar-w@outlook.com</email>
+		</developer>
+	</developers>
+	
 	<properties>
 		<jedis.version>2.7.0</jedis.version>
 		<netty.version>3.5.9.Final</netty.version>
