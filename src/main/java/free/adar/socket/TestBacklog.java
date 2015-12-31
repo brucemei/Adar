@@ -26,7 +26,7 @@ public class TestBacklog {
 
 	private static final AtomicBoolean UPPERLIMIT = new AtomicBoolean();
 	
-	private static final int CONCURRENT = 17;
+	private static final int CONCURRENT = 1;
 	
 	private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(CONCURRENT);
 	
@@ -55,20 +55,20 @@ public class TestBacklog {
 		public void run() {
 			while (true) {
 				try {
-					synchronized (CheckSocket.class) {
-						if (checkLimit() && !ISOVER.get()) {
-							return;
-						}
-
-						System.out.println("Check socket count: " + COUNT.incrementAndGet());
-						
-						Socket socket = new Socket();
-						socket.connect(new InetSocketAddress("localhost", PORT));
+					if (checkLimit() && !ISOVER.get()) {
+						return;
 					}
-				} catch (ConnectException e) {
-					System.out.println("Current environment upper limit: " + COUNT.get());
+
+					System.out.println("Check socket count: " + COUNT.incrementAndGet());
 					
-					exit();
+					Socket socket = new Socket();
+					socket.connect(new InetSocketAddress("localhost", PORT));
+				} catch (ConnectException e) {
+					synchronized (TestBacklog.class) {
+						System.out.println("Current environment upper limit: " + COUNT.get());
+						
+						System.exit(0);
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
