@@ -15,7 +15,8 @@
 	
 	<properties>
 		<jedis.version>2.7.0</jedis.version>
-		<netty.version>3.5.9.Final</netty.version>
+		<netty3.version>3.5.9.Final</netty3.version>
+		<netty5.version>5.0.0.Alpha1</netty5.version>
 		<commons-pool2.version>2.2</commons-pool2.version>
 		<httpasyncclient.version>4.1</httpasyncclient.version>
 		<fastjson.version>1.2.6</fastjson.version>
@@ -33,7 +34,13 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
-			<version>${netty.version}</version>
+			<version>${netty3.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>${netty5.version}</version>
 		</dependency>
 
 		<dependency>

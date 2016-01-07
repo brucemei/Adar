@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * 
  *  @see java.util.concurrent.ThreadPoolExecutor#execute(Runnable)
  */
-public class TestThreadPoolExecute {
+public class TestThreadPoolExecutor {
 	public static void main(String[] args) {
 		ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 4, 10, TimeUnit.MINUTES, new LinkedBlockingQueue<Runnable>());
 		

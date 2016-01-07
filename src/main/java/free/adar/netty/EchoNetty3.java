@@ -18,7 +18,7 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 /**
  * Netty version: 3.5.9.Final
  */
-public class HelloNetty {
+public class EchoNetty3 {
 
 	public static void main(String[] args) {
 		ServerBootstrap bootstrap = new ServerBootstrap(
@@ -49,6 +49,7 @@ public class HelloNetty {
 			}
 		});
 		
+		bootstrap.setOption("backlog", 200);
 		bootstrap.bind(new InetSocketAddress(10080));
 	}
 }
