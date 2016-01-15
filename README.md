@@ -3,4 +3,14 @@
 # Adar
 > 随手测试
 
-> cache. cdn. concurrent. file. lambda. nio. netty. pool. push. queue. socket...
+* [x] cache. 
+* [x] cdn. 
+* [x] concurrent. 
+* [x] file. 
+* [x] lambda. 
+* [x] nio. 
+* [x] netty. 
+* [x] pool. 
+* [x] push. 
+* [x] queue. 
+* [x] socket
