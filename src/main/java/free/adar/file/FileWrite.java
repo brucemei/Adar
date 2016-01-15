@@ -27,12 +27,15 @@ import java.nio.file.StandardOpenOption;
  * @since 1.7
  */
 public class FileWrite {
+	
+	private static final String FILE = "E:/1.txt";
 
 	public static void main(String[] args) throws IOException {
-		FileChannel fileChannel = FileChannel.open(Paths.get("E:/2.txt"), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-		
-		fileChannel.write(ByteBuffer.wrap("File write".getBytes()));
-		
-		fileChannel.close();
+		try (FileChannel fileChannel = FileChannel.open(Paths.get(FILE), StandardOpenOption.CREATE, StandardOpenOption.WRITE)) {
+			fileChannel.write(ByteBuffer.wrap("File write".getBytes()));
+			
+			// Random Write
+			// fileChannel.write(ByteBuffer.wrap("File write".getBytes()), position);
+		}
 	}
 }

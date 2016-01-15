@@ -20,7 +20,6 @@ package free.adar.file;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -29,26 +28,16 @@ import java.nio.file.StandardOpenOption;
  */
 public class FileRead {
 	
+	private static final String FILE = "E:/1.txt";
+	
 	public static void main(String[] args) throws IOException {
-		FileChannel fileChannel = FileChannel.open(Paths.get("E:/1.txt"), StandardOpenOption.READ);
-		
-		ByteBuffer buffer = ByteBuffer.allocate(10);
-		
-		fileChannel.read(buffer);
-		while (!buffer.hasRemaining()) {
-			ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() * 2);
+		try (FileChannel fileChannel = FileChannel.open(Paths.get(FILE), StandardOpenOption.READ)) {
+			ByteBuffer buffer = ByteBuffer.allocate(Long.valueOf(Paths.get(FILE).toFile().length()).intValue());
 			
-			buffer.flip();
-			newBuffer.put(buffer);
+			fileChannel.read(buffer);
 			
-			fileChannel.read(newBuffer);
-
-			buffer = newBuffer;
+			// Random Read
+			// fileChannel.read(buffer, position);
 		}
-		
-		buffer.flip();
-		System.out.println(Charset.defaultCharset().decode(buffer).toString());
-		
-		fileChannel.close();
 	}
 }
