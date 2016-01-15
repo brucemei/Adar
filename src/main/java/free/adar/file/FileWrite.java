@@ -29,7 +29,7 @@ import java.nio.file.StandardOpenOption;
 public class FileWrite {
 
 	public static void main(String[] args) throws IOException {
-		FileChannel fileChannel = FileChannel.open(Paths.get("E:/2.txt"), StandardOpenOption.WRITE);
+		FileChannel fileChannel = FileChannel.open(Paths.get("E:/2.txt"), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 		
 		fileChannel.write(ByteBuffer.wrap("File write".getBytes()));
 		
