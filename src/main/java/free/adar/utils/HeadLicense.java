@@ -81,15 +81,11 @@ public class HeadLicense {
 			@Override
 			public FileVisitResult visitFile(final Path file, BasicFileAttributes attrs) throws IOException {
 				if (file.toFile().getName().endsWith(FILE_SUFFIX)) {
-					EXECUTOR_SERVICE.submit(new Runnable() {
-						
-						@Override
-						public void run() {
-							try {
-								addHeadLicense(file);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
+					EXECUTOR_SERVICE.submit(() -> {
+						try {
+							addHeadLicense(file);
+						} catch (IOException e) {
+							e.printStackTrace();
 						}
 					});
 				}
