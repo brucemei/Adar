@@ -37,13 +37,13 @@ public class HeadLicense {
 
 	private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
-	private static final int DEFAULT_BUFFER_SIZE = 1024;
-	
 	private static final String FILE_SUFFIX = ".java";
 	
 	private static final String LICENSE;
 	
 	private static final String LICENSE_MARK;
+	
+	private static final int LICENSE_MARK_LENGTH = 20;
 	
 	private static final String CRLF = "\r\n";
 
@@ -68,7 +68,7 @@ public class HeadLicense {
 		buf.append(" */" + CRLF);
 		
 		LICENSE = buf.toString();
-		LICENSE_MARK = LICENSE.substring(0, 20);
+		LICENSE_MARK = LICENSE.substring(0, LICENSE_MARK_LENGTH);
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -112,34 +112,21 @@ public class HeadLicense {
 	}
 	
 	private static ByteBuffer readIfNoHeadLicense(Path file) throws IOException {
-		FileChannel fileChannel = FileChannel.open(file, StandardOpenOption.READ);
-		
-		ByteBuffer buffer = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
-		fileChannel.read(buffer);
-		if (checkHasHeadLicense(buffer)) {
-			return null;
+		try (FileChannel fileChannel = FileChannel.open(file, StandardOpenOption.READ)) {
+			ByteBuffer buffer = ByteBuffer.allocate(Long.valueOf(file.toFile().length()).intValue());
+			fileChannel.read(buffer);
+			if (checkHasHeadLicense(buffer)) {
+				return null;
+			} else {
+				return buffer;
+			}
 		}
-		
-		while (!buffer.hasRemaining()) {
-			ByteBuffer newBuffer = ByteBuffer.allocate(buffer.capacity() * 2);
-			
-			buffer.flip();
-			newBuffer.put(buffer);
-			
-			fileChannel.read(newBuffer);
-			
-			buffer = newBuffer;
-		}
-		
-		fileChannel.close();
-		
-		return buffer;
 	}
 	
 	private static void truncateAndWrite(Path file, ByteBuffer buffer) throws IOException {
-		FileChannel fileChannel = FileChannel.open(file, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
-		fileChannel.write(buffer);
-		fileChannel.close();
+		try (FileChannel fileChannel = FileChannel.open(file, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
+			fileChannel.write(buffer);
+		}
 	}
 	
 	private static ByteBuffer headLicenseBuffer(ByteBuffer buffer) {
@@ -152,6 +139,6 @@ public class HeadLicense {
 	}
 	
 	private static boolean checkHasHeadLicense(ByteBuffer buffer) {
-		return new String(buffer.array()).contains(LICENSE_MARK);
+		return new String(buffer.array(), 0, LICENSE_MARK_LENGTH).equals(LICENSE_MARK);
 	}
 }
