@@ -111,11 +111,8 @@ public class HeadLicense {
 		try (FileChannel fileChannel = FileChannel.open(file, StandardOpenOption.READ)) {
 			ByteBuffer buffer = ByteBuffer.allocate(Long.valueOf(file.toFile().length()).intValue());
 			fileChannel.read(buffer);
-			if (checkHasHeadLicense(buffer)) {
-				return null;
-			} else {
-				return buffer;
-			}
+			
+			return checkHasHeadLicense(buffer) ? null : buffer;
 		}
 	}
 	
