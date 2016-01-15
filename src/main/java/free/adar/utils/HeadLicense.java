@@ -75,7 +75,7 @@ public class HeadLicense {
 		addHeadLicense("E:/Servers/Repository_Git/Adar/src");
 	}
 	
-	private static void addHeadLicense(String dir) throws IOException {
+	public static void addHeadLicense(String dir) throws IOException {
 		Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<Path>() {
 
 			@Override
@@ -89,7 +89,6 @@ public class HeadLicense {
 						}
 					});
 				}
-				
 				
 				return FileVisitResult.CONTINUE;
 			}
