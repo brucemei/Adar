@@ -3,6 +3,7 @@ package free.adar.concurrent.threadpool;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
@@ -12,7 +13,7 @@ public class EasyThreadPool implements ThreadPool {
 	
 	private final BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<Runnable>();
 	
-	private final List<Worker> workers = new ArrayList<Worker>(DEFAULT_POOL_SIZE);
+	private final List<Worker> workers = new CopyOnWriteArrayList<Worker>(new ArrayList<Worker>(DEFAULT_POOL_SIZE));
 	
 	private final ThreadFactory threadFactory = new EasyThreadFactory();
 
@@ -26,11 +27,15 @@ public class EasyThreadPool implements ThreadPool {
 
 	private void prestartThread() {
 		for (int i = 0; i < size; i++) {
-			Worker worker = new Worker();
-			workers.add(worker);
-			
-			threadFactory.newThread(worker).start();
+			newPoolThread();
 		}
+	}
+	
+	private void newPoolThread() {
+		Worker worker = new Worker();
+		workers.add(worker);
+		
+		threadFactory.newThread(worker).start();
 	}
 	
 	@Override
@@ -65,6 +70,8 @@ public class EasyThreadPool implements ThreadPool {
 					} catch (Exception e) {
 						// Task exceptrion
 						e.printStackTrace();
+						
+						newPoolThread();
 					}
 				}
 			}
