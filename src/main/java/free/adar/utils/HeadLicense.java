@@ -30,13 +30,16 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 许可声明 批量添加工具
+ */
 public class HeadLicense {
 
-	private static final String CODE_ROOT_DIR = "E:/Servers/Repository_Git/Lzy/src";
-	
+	private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+
 	private static final int DEFAULT_BUFFER_SIZE = 1024;
 	
-	private static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+	private static final String FILE_SUFFIX = ".java";
 	
 	private static final String LICENSE;
 	
@@ -69,15 +72,15 @@ public class HeadLicense {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		addHeadLicense();
+		addHeadLicense("E:/Servers/Repository_Git/Adar/src");
 	}
 	
-	private static void addHeadLicense() throws IOException {
-		Files.walkFileTree(Paths.get(CODE_ROOT_DIR), new SimpleFileVisitor<Path>() {
+	private static void addHeadLicense(String dir) throws IOException {
+		Files.walkFileTree(Paths.get(dir), new SimpleFileVisitor<Path>() {
 
 			@Override
 			public FileVisitResult visitFile(final Path file, BasicFileAttributes attrs) throws IOException {
-				if (file.toFile().getName().endsWith(".java")) {
+				if (file.toFile().getName().endsWith(FILE_SUFFIX)) {
 					EXECUTOR_SERVICE.submit(new Runnable() {
 						
 						@Override
