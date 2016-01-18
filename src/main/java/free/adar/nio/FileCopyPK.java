@@ -23,22 +23,28 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 /**
  * 文件拷贝效率对比  
  * 		Buffer IO
  * 		NIO map 
  * 		NIO channel
+ * 		Files copy
  */
 public class FileCopyPK {
 	
 	public static void main(String[] args) throws Exception {
-		String src = "E:/File_install/jprofiler_windows-x64_8_0_7.exe";
+		String src = "E:/File_install/Office_Professional_Plus_2013_64Bit.ISO";
+//		String src = "E:/File_install/xshell_5.0.0655.exe";
 		String out = "E:/outFile_";
 		
 		long start = System.currentTimeMillis();
@@ -52,86 +58,75 @@ public class FileCopyPK {
 		start = System.currentTimeMillis();
 		copyChannel(src, out);
 		System.out.println("Channel: " + (System.currentTimeMillis() - start));
+		
+		start = System.currentTimeMillis();
+		copyFilesCopy(src, out);
+		System.out.println("Files copy: " + (System.currentTimeMillis() - start));
 	}
 	
 	/**
 	 * Buffer IO
-	 * 
-	 * @param src
-	 * @param out
-	 * @throws Exception
 	 */
 	private static void copyBufferIo(String src, String out) throws Exception {
 		out = out + "BufferIo";
 		
-		InputStream srcFile = new BufferedInputStream(new FileInputStream(src));
-		OutputStream outFile = new BufferedOutputStream(new FileOutputStream(out));
-		
-		int len;
-		byte[] buf = new byte[1024 * 1024];
-		while ((len = srcFile.read(buf)) != -1) {
-			outFile.write(buf, 0, len);
-			outFile.flush();
+		try (InputStream srcFile = new BufferedInputStream(new FileInputStream(src));
+			 OutputStream outFile = new BufferedOutputStream(new FileOutputStream(out))) {
+			
+			int len;
+			byte[] buf = new byte[1024 * 1024];
+			while ((len = srcFile.read(buf)) != -1) {
+				outFile.write(buf, 0, len);
+				outFile.flush();
+			}
 		}
-		
-		srcFile.close();
-		outFile.close();
 	}
 	
 	/**
 	 * NIO Map
-	 * 
-	 * @param src
-	 * @param out
-	 * @throws Exception
 	 */
 	private static void copyFileMap(String src, String out) throws Exception {
 		out = out + "FileMap";
 		
-		RandomAccessFile srcFile = new RandomAccessFile(src, "r");
-		RandomAccessFile outFile = new RandomAccessFile(out, "rw");
-		FileChannel srcChannel = srcFile.getChannel();
-		FileChannel outChannel = outFile.getChannel();
-		
-		MappedByteBuffer srcfileMap = srcChannel.map(MapMode.READ_ONLY, 0, srcChannel.size());
-		MappedByteBuffer outFileMap = outChannel.map(MapMode.READ_WRITE, 0, srcChannel.size());
-		
-		outFileMap.put(srcfileMap);
-		
-		srcChannel.close();
-		outChannel.close();
-		
-		srcFile.close();
-		outFile.close();
+		try (FileChannel srcChannel = FileChannel.open(Paths.get(src), StandardOpenOption.READ);
+			 FileChannel outChannel = FileChannel.open(Paths.get(out), StandardOpenOption.CREATE, 
+					 												   StandardOpenOption.READ,
+					 												   StandardOpenOption.WRITE)) {
+			
+			MappedByteBuffer srcfileMap = srcChannel.map(MapMode.READ_ONLY, 0, srcChannel.size());
+			MappedByteBuffer outFileMap = outChannel.map(MapMode.READ_WRITE, 0, srcChannel.size());
+			
+			outFileMap.put(srcfileMap);
+		}
 	}
 	
 	/**
 	 * NIO channel
-	 * 
-	 * @param src
-	 * @param out
-	 * @throws Exception
 	 */
 	private static void copyChannel(String src, String out) throws Exception {
 		out = out + "Channel";
 		
-		RandomAccessFile srcFile = new RandomAccessFile(src, "r");
-		RandomAccessFile outFile = new RandomAccessFile(out, "rw");
-		FileChannel srcChannel = srcFile.getChannel();
-		FileChannel outChannel = outFile.getChannel();
-		
-		ByteBuffer buff = ByteBuffer.allocate(1024 * 1024);
-		
-		while (srcChannel.read(buff) != -1) {
-			buff.flip();
-			outChannel.write(buff);
-			buff.clear();
+		try (FileChannel srcChannel = FileChannel.open(Paths.get(src), StandardOpenOption.READ);
+			 FileChannel outChannel = FileChannel.open(Paths.get(out), StandardOpenOption.CREATE, 
+					 												   StandardOpenOption.WRITE)) {
+			ByteBuffer buff = ByteBuffer.allocate(1024 * 1024);
+			while (srcChannel.read(buff) != -1) {
+				buff.flip();
+				outChannel.write(buff);
+				buff.clear();
+			}
 		}
+	}
+
+	/**
+	 * Files copy
+	 */
+	private static void copyFilesCopy(String src, String out) throws Exception {
+		out = out + "Files";
 		
-		srcChannel.close();
-		outChannel.close();
+		Path srcPath = Paths.get(src);
+		Path outPath = Paths.get(out);
 		
-		srcFile.close();
-		outFile.close();
+		Files.copy(srcPath, outPath, StandardCopyOption.REPLACE_EXISTING);
 	}
 }
