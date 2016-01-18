@@ -72,7 +72,7 @@ public class HeadLicense {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		addHeadLicense("E:/Servers/Repository_Git/Adar/src");
+		addHeadLicense("E:/1");
 	}
 	
 	public static void addHeadLicense(String dir) throws IOException {
@@ -103,7 +103,7 @@ public class HeadLicense {
 			return;
 		}
 		
-		truncateAndWrite(file, headLicenseBuffer(buffer));
+		truncateAndWrite(file, ByteBuffer.wrap(LICENSE.getBytes()), buffer);
 	}
 	
 	private static ByteBuffer readIfNoHeadLicense(Path file) throws IOException {
@@ -111,23 +111,15 @@ public class HeadLicense {
 			ByteBuffer buffer = ByteBuffer.allocate(Long.valueOf(file.toFile().length()).intValue());
 			fileChannel.read(buffer);
 			
-			return checkHasHeadLicense(buffer) ? null : buffer;
+			return checkHasHeadLicense(buffer) ? null : (ByteBuffer) buffer.flip();
 		}
 	}
 	
-	private static void truncateAndWrite(Path file, ByteBuffer buffer) throws IOException {
+	private static void truncateAndWrite(Path file, ByteBuffer licenseBuffer, ByteBuffer contentBuffer) throws IOException {
 		try (FileChannel fileChannel = FileChannel.open(file, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
-			fileChannel.write(buffer);
+			fileChannel.write(licenseBuffer);
+			fileChannel.write(contentBuffer);
 		}
-	}
-	
-	private static ByteBuffer headLicenseBuffer(ByteBuffer buffer) {
-		ByteBuffer bufferWithLicense = ByteBuffer.allocate(buffer.capacity() + LICENSE.length());
-		buffer.flip();
-		bufferWithLicense.put(LICENSE.getBytes()).put(buffer);
-		bufferWithLicense.flip();
-		
-		return bufferWithLicense;
 	}
 	
 	private static boolean checkHasHeadLicense(ByteBuffer buffer) {
