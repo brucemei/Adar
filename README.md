@@ -14,3 +14,4 @@
 * [x] push 
 * [x] queue
 * [x] socket
+* [x] jdk bugs
