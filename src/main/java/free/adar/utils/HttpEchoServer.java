@@ -30,7 +30,7 @@ import com.sun.net.httpserver.HttpServer;
 /**
  * @since jdk1.6
  */
-public class EchoServer {
+public class HttpEchoServer {
 
 	private static final char SPACE = ' ';
 	
