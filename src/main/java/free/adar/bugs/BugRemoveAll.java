@@ -54,7 +54,7 @@ public class BugRemoveAll {
 	 */
 	public static boolean removeAll(Collection<?> c1, Collection<?> c2) {
 		boolean modified = false;
-		Iterator<?> it = c1.iterator(); // 此处建议遍历常规较小的待删除集合c2
+		Iterator<?> it = c1.iterator();
 		while (it.hasNext()) {
 			if (c2.contains(it.next())) { // 此处建议调用了c1的contains方法, 若c1为List, c2为Set,调用contains对象的不同将导致结果将不一致
 										  // 调用作为this对象c1的contains方法更符合预期
