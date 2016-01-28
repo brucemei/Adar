@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package free.adar.nio;
+package free.adar.file;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -36,31 +36,50 @@ import java.nio.file.StandardOpenOption;
 /**
  * 文件拷贝效率对比  
  * 		Buffer IO
- * 		NIO map 
- * 		NIO channel
+ * 		Channel
+ * 		Channel map 
+ * 		Channel Transfer
  * 		Files copy
  */
 public class FileCopyPK {
 	
+	/**
+	 * 28 MB
+	 */
+//	private static final String SRC = "E:/File_install/xshell_5.0.0655.exe";
+
+	/**
+	 * 186 MB
+	 */
+	private static final String SRC = "E:/File_install/jdk-8u66-windows-x64.exe";
+
+	/**
+	 * 914 MB
+	 */
+//	private static final String SRC = "E:/File_install/Office_Professional_Plus_2013_64Bit.ISO";
+	
+	private static final String OUT = "E:/outFile_";
+	
 	public static void main(String[] args) throws Exception {
-		String src = "E:/File_install/Office_Professional_Plus_2013_64Bit.ISO";
-//		String src = "E:/File_install/xshell_5.0.0655.exe";
-		String out = "E:/outFile_";
 		
 		long start = System.currentTimeMillis();
-		copyBufferIo(src, out);
+		copyBufferIo(SRC, OUT);
 		System.out.println("BufferIo: " + (System.currentTimeMillis() - start));
 		
 		start = System.currentTimeMillis();
-		copyFileMap(src, out);
-		System.out.println("FileMap: " + (System.currentTimeMillis() - start));
+		copyChannel(SRC, OUT);
+		System.out.println("Channel: " + (System.currentTimeMillis() - start));
 
 		start = System.currentTimeMillis();
-		copyChannel(src, out);
-		System.out.println("Channel: " + (System.currentTimeMillis() - start));
+		copyChannelMap(SRC, OUT);
+		System.out.println("Channel Map: " + (System.currentTimeMillis() - start));
 		
 		start = System.currentTimeMillis();
-		copyFilesCopy(src, out);
+		transferCopy(SRC, OUT);
+		System.out.println("Channel Transfer: " + (System.currentTimeMillis() - start));
+
+		start = System.currentTimeMillis();
+		copyFilesCopy(SRC, OUT);
 		System.out.println("Files copy: " + (System.currentTimeMillis() - start));
 	}
 	
@@ -83,9 +102,27 @@ public class FileCopyPK {
 	}
 	
 	/**
-	 * NIO Map
+	 * Channel
 	 */
-	private static void copyFileMap(String src, String out) throws Exception {
+	private static void copyChannel(String src, String out) throws Exception {
+		out = out + "Channel";
+		
+		try (FileChannel srcChannel = FileChannel.open(Paths.get(src), StandardOpenOption.READ);
+			 FileChannel outChannel = FileChannel.open(Paths.get(out), StandardOpenOption.CREATE, 
+					 												   StandardOpenOption.WRITE)) {
+			ByteBuffer buff = ByteBuffer.allocate(1024 * 1024);
+			while (srcChannel.read(buff) != -1) {
+				buff.flip();
+				outChannel.write(buff);
+				buff.clear();
+			}
+		}
+	}
+	
+	/**
+	 * Channel Map
+	 */
+	private static void copyChannelMap(String src, String out) throws Exception {
 		out = out + "FileMap";
 		
 		try (FileChannel srcChannel = FileChannel.open(Paths.get(src), StandardOpenOption.READ);
@@ -101,20 +138,15 @@ public class FileCopyPK {
 	}
 	
 	/**
-	 * NIO channel
+	 * Channel Transfer
 	 */
-	private static void copyChannel(String src, String out) throws Exception {
-		out = out + "Channel";
+	private static void transferCopy(String src, String out) throws Exception {
+		out = out + "Transfer";
 		
 		try (FileChannel srcChannel = FileChannel.open(Paths.get(src), StandardOpenOption.READ);
 			 FileChannel outChannel = FileChannel.open(Paths.get(out), StandardOpenOption.CREATE, 
 					 												   StandardOpenOption.WRITE)) {
-			ByteBuffer buff = ByteBuffer.allocate(1024 * 1024);
-			while (srcChannel.read(buff) != -1) {
-				buff.flip();
-				outChannel.write(buff);
-				buff.clear();
-			}
+			srcChannel.transferTo(0, srcChannel.size(), outChannel);
 		}
 	}
 
