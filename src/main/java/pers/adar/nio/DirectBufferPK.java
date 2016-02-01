@@ -17,11 +17,12 @@
  */
 package pers.adar.nio;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 /**
  * 直接缓冲区与非直接缓冲区读取效率PK
@@ -29,17 +30,15 @@ import java.nio.channels.FileChannel;
  * 
  * 		耗时对比:
  * 			Read DirectBuffer < Read Buffer
- * 			Write Buffer < Write DirectBuffer
+ * 			Write DirectBuffer < Write Buffer
  * 
  * JVM: -Xms512m -Xmx2048m -XX:MaxDirectMemorySize=2048m
  */
 public class DirectBufferPK {
 	
-	private static final String src = "E:/File_install/jdk-6u43-windows-x64.exe";
+	private static final String src = "E:/File_install/jdk-8u66-windows-x64.exe";
 	
-	private static final String out1 = "E:/1.txt";
-
-	private static final String out2 = "E:/2.txt";
+	private static final String TEMP = "DirectBufferPK";
 	
 	private static final int size = 1024 * 1024 * 1024;
 	
@@ -59,34 +58,23 @@ public class DirectBufferPK {
 		directBuffer.flip();
 		
 		start = System.currentTimeMillis();
-		bufferWrite(out1, buffer);
+		bufferWrite(buffer);
 		System.out.println("Write Buffer: " + (System.currentTimeMillis() - start));
 
 		start = System.currentTimeMillis();
-		bufferWrite(out2, directBuffer);
+		bufferWrite(directBuffer);
 		System.out.println("Write DirectBuffer: " + (System.currentTimeMillis() - start));
 	}
 	
 	private static void bufferRead(String src, ByteBuffer buffer) throws IOException {
-		RandomAccessFile srcFile = new RandomAccessFile(src, "r");
-		FileChannel srcChannel = srcFile.getChannel();
-		
-		srcChannel.read(buffer);
-		
-		srcFile.close();
+		try (FileChannel srcChannel = FileChannel.open(Paths.get(src), StandardOpenOption.READ)) {
+			srcChannel.read(buffer);
+		}
 	}
 	
-	private static void bufferWrite(String out, ByteBuffer buffer) throws IOException {
-		File file = new File(out);
-		if (!file.exists()) {
-			file.createNewFile();
+	private static void bufferWrite(ByteBuffer buffer) throws IOException {
+		try (FileChannel srcChannel = FileChannel.open(Files.createTempFile(TEMP, null), StandardOpenOption.WRITE)) {
+			srcChannel.write(buffer);
 		}
-		
-		RandomAccessFile srcFile = new RandomAccessFile(out, "rw");
-		FileChannel srcChannel = srcFile.getChannel();
-		
-		srcChannel.write(buffer);
-		
-		srcFile.close();
 	}
 }
