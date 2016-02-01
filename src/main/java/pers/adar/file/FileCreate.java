@@ -18,29 +18,19 @@
 package pers.adar.file;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-/**
- * @since 1.7
- */
-public class FileRead {
-	
-	private static final String FILE = "E:/1.txt";
-	
+public class FileCreate {
+
 	public static void main(String[] args) throws IOException {
-		try (FileChannel fileChannel = FileChannel.open(Paths.get(FILE), StandardOpenOption.READ)) {
-			ByteBuffer buffer = ByteBuffer.allocate(Long.valueOf(Paths.get(FILE).toFile().length()).intValue());
-			
-			fileChannel.read(buffer);
-			
-			// Random Read
-			// fileChannel.read(buffer, position);
-		}
+		// Temp File
+		Files.createTempFile("TestTemp", null);
 		
-		// 读取小文件
-		// byte[] bytes = Files.readAllBytes(Paths.get(FILE));
+		Files.createFile(Paths.get("E:/1.txt"));
+		
+		FileChannel.open(Paths.get("E:/1.txt"),  StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 	}
 }
