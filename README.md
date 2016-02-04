@@ -16,4 +16,7 @@
 * [x] socket
 * [x] zip
 * [x] redis
+* [x] jms
 * [x] jdk bugs
+
+
