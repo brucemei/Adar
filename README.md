@@ -14,4 +14,6 @@
 * [x] push 
 * [x] queue
 * [x] socket
+* [x] zip
+* [x] redis
 * [x] jdk bugs
