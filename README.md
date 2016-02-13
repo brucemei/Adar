@@ -17,6 +17,7 @@
 * [x] zip
 * [x] redis
 * [x] jms
+* [x] zookeeper
 * [x] jdk bugs
 
 
