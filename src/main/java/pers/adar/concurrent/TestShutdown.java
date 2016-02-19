@@ -37,11 +37,13 @@ public class TestShutdown {
 			
 			@Override
 			public void run() {
-				while (true) {
+				while (!Thread.interrupted()) {
 					System.out.println("Task running");
 					try {
 						TimeUnit.SECONDS.sleep(1);
 					} catch (Exception e) {
+//						Thread.currentThread().interrupt();
+						
 						e.printStackTrace();
 					}
 				}
