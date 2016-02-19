@@ -50,9 +50,12 @@ public class EasyThreadPool implements ThreadPool {
 	
 	private void newPoolThread() {
 		Worker worker = new Worker();
+		Thread thread = threadFactory.newThread(worker);
+		worker.setThread(thread);
+		
 		workers.add(worker);
 		
-		threadFactory.newThread(worker).start();
+		worker.start();
 	}
 	
 	@Override
@@ -68,8 +71,18 @@ public class EasyThreadPool implements ThreadPool {
 	}
 	
 	class Worker implements Runnable {
+
+		private Thread thread;
 		
 		private volatile boolean running = true;
+		
+		public void start() {
+			thread.start();
+		}
+		
+		public void setThread(Thread thread) {
+			this.thread = thread;
+		}
 
 		@Override
 		public void run() {
@@ -96,6 +109,8 @@ public class EasyThreadPool implements ThreadPool {
 		
 		public void shutdown() {
 			running = false;
+			
+			thread.interrupt();
 		}
 	}
 }
