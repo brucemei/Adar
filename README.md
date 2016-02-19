@@ -5,6 +5,7 @@
 
 * [x] cache 
 * [x] cdn 
+* [x] thread pool
 * [x] concurrent
 * [x] file
 * [x] lambda 
