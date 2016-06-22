@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, adar.w (adar.w@outlook.com) 
+ * Copyright (c) 2015, adar.w (adar-w@outlook.com) 
  * 
  * http://www.adar-w.me
  * 

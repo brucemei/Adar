@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, adar.w (adar.w@outlook.com) 
+ * Copyright (c) 2015, adar.w (adar-w@outlook.com) 
  * 
  * http://www.adar-w.me
  *
@@ -50,7 +50,7 @@ public class HeadLicense {
 	static {
 		StringBuilder buf = new StringBuilder();
 		buf.append("/**" + CRLF);
-		buf.append(" * Copyright (c) 2015, adar.w (adar.w@outlook.com) " + CRLF);
+		buf.append(" * Copyright (c) 2015, adar.w (adar-w@outlook.com) " + CRLF);
 		buf.append(" * " + CRLF);
 		buf.append(" * http://www.adar-w.me" + CRLF);
 		buf.append(" * " + CRLF);
